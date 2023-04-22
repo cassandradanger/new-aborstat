@@ -57,14 +57,18 @@ export default {
   },
   methods: {
     getStates() {
-      axios.get("api/data").then((response) => {
-        console.log(response);
+      axios.get("api/states").then((response) => {
+        this.states = response.data;
       });
     },
-    async submitBtn() {
-      let response = await this.$api.fetchGestationalLimits(this.selected.abbr);
-      this.gestational_limit = response[this.selected.name];
-      this.confirmSelected = this.selected.name;
+    submitBtn() {
+      axios
+        .get("/api/gestationalLimits", this.selected.abbr)
+        .then((response) => {
+          console.log(response);
+          this.gestational_limit = response[this.selected.name];
+          this.confirmSelected = this.selected.name;
+        });
     },
   },
 };

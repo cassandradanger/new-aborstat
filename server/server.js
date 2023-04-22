@@ -5,14 +5,16 @@ require("dotenv").config();
 const app = express();
 
 // Route includes
-const dataRouter = require("./routes/data.router");
+const statesRouter = require("./routes/states.router");
+const gestationalLimits = require("./routes/gestationalLimits.router");
 
 // Body parser middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 /* Routes */
-app.use("/api/data", dataRouter);
+app.use("/api/states", statesRouter);
+app.use("/api/gestationalLimits", gestationalLimits);
 
 // Serve static files
 app.use(express.static("build"));
