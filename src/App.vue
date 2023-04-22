@@ -1,26 +1,108 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="container">
+    <div>
+      <img class="logo" src="./assets/uterlight-purple.png" />
+      <h1 class="title">aborstat</h1>
+      <p class="welcome">
+        abortion laws and policies can change quickly. find reliable and
+        up-to-date information by state.
+      </p>
+      <label id="select-state">search by state</label>
+      <select v-model="selected" name="states" id="select-state">
+        <option disabled value="">select your state</option>
+        <option v-for="state in states" :value="state" v-bind:key="state.abbr">
+          {{ state.name }}
+        </option>
+      </select>
+      <button @click="submitBtn">submit</button>
+      <DisplayGestationalLimits
+        :data="gestational_limit"
+        :selected-state="confirmSelected"
+      />
+      <span class="data-attr-wrapper">
+        <h6>
+          abortion status - data provided by
+          <a target="_blank" href="http://www.abortionpolicyapi.com"
+            >Abortion Policy API</a
+          >, which should be consistent with the data from the
+          <a href=" https://www.guttmacher.org/state-policy/laws-policies"
+            >Guttmacher Institute</a
+          >
+        </h6>
+        <h6>
+          logo provided by
+          <a target="_blank" href="https://www.hajny.com">Chris Hajny</a>
+        </h6>
+      </span>
+    </div>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import DisplayGestationalLimits from "./components/DisplayGestationalLimits";
+import axios from "axios";
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  components: { DisplayGestationalLimits },
+  data() {
+    return {
+      selected: {},
+      states: [],
+      gestational_limit: {},
+      confirmSelected: "",
+    };
+  },
+  mounted() {
+    this.getStates();
+  },
+  methods: {
+    getStates() {
+      axios.get("api/data").then((response) => {
+        console.log(response);
+      });
+    },
+    async submitBtn() {
+      let response = await this.$api.fetchGestationalLimits(this.selected.abbr);
+      this.gestational_limit = response[this.selected.name];
+      this.confirmSelected = this.selected.name;
+    },
+  },
+};
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+<style scoped>
+.container {
+  margin: 40px auto;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  font-family: "Quicksand", "Source Sans Pro", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+.logo {
+  height: 130px;
+}
+.title {
+  display: block;
+  font-size: 50px;
+  font-weight: 500;
+  color: #35495e;
+  letter-spacing: 3px;
+  margin: 0 0 30px;
+}
+.welcome {
+  font-size: 12pt;
+  font-weight: 300;
+  margin: 0 auto 20px;
+  line-height: 20px;
+  max-width: 400px;
+}
+#select-state,
+button {
+  font-size: 17px;
+}
+.data-attr-wrapper {
+  margin-bottom: 0;
 }
 </style>
