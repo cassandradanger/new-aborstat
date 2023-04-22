@@ -1,5 +1,6 @@
 <template>
   <div class="display-info-wrapper">
+    <div v-if="isLoading" class="loading-screen" />
     <label v-if="formatLMP()" class="info-label"
       >general abortion status for {{ selectedState }}:</label
     >
@@ -36,7 +37,7 @@
 
 <script>
 export default {
-  props: ["data", "selectedState"],
+  props: ["data", "selectedState", "isLoading"],
   methods: {
     formatLMP() {
       switch (this.data?.banned_after_weeks_since_LMP) {
@@ -125,6 +126,17 @@ p {
   padding: 0 0 5px 10px;
   margin: 30px 0 10px;
   font-weight: 400;
+}
+.loading-screen {
+  position: fixed;
+  margin: 0 auto;
+  width: 100%;
+  height: 100%;
+  top: 5%;
+  left: 0;
+  object-fit: cover;
+  background: url(../assets/uterlight-green.png) center center no-repeat;
+  opacity: 0.5;
 }
 @media only screen and (max-width: 730px) {
   .display-info-wrapper {

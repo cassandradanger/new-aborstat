@@ -205,8 +205,6 @@ const states = [
 ];
 
 router.get("/", (req, res) => {
-  // GET route code here
-  console.log("ihi hihihihi!");
   res.send(states);
 });
 

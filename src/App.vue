@@ -8,14 +8,19 @@
         up-to-date information by state.
       </p>
       <label id="select-state">search by state</label>
-      <select v-model="selected" name="states" id="select-state">
+      <select
+        v-model="selected"
+        name="states"
+        id="select-state"
+        @change="handleSubmit"
+      >
         <option disabled value="">select your state</option>
         <option v-for="state in states" :value="state" v-bind:key="state.abbr">
           {{ state.name }}
         </option>
       </select>
-      <button @click="submitBtn">submit</button>
       <DisplayGestationalLimits
+        :is-loading="isLoading"
         :data="gestational_limit"
         :selected-state="confirmSelected"
       />
@@ -50,6 +55,7 @@ export default {
       states: [],
       gestational_limit: {},
       confirmSelected: "",
+      isLoading: false,
     };
   },
   mounted() {
@@ -61,13 +67,14 @@ export default {
         this.states = response.data;
       });
     },
-    submitBtn() {
+    handleSubmit() {
+      this.isLoading = true;
       axios
-        .get("/api/gestationalLimits", this.selected.abbr)
+        .post("/api/gestationalLimits", { state: this.selected.abbr })
         .then((response) => {
-          console.log(response);
-          this.gestational_limit = response[this.selected.name];
+          this.gestational_limit = response.data[this.selected.name];
           this.confirmSelected = this.selected.name;
+          this.isLoading = false;
         });
     },
   },
@@ -101,10 +108,6 @@ export default {
   margin: 0 auto 20px;
   line-height: 20px;
   max-width: 400px;
-}
-#select-state,
-button {
-  font-size: 17px;
 }
 .data-attr-wrapper {
   margin-bottom: 0;
