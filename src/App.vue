@@ -5,7 +5,7 @@
       <StateSelect @select-state="handleSubmit" />
       <DisplayGestationalLimits
         :is-loading="isLoading"
-        :data="gestational_limit"
+        :data="gestationalLimit"
         :selected-state="confirmSelected"
       />
       <AborstatFooter />
@@ -30,8 +30,9 @@ export default {
   data() {
     return {
       selected: {},
-      gestational_limit: {},
+      gestationalLimit: {},
       isLoading: false,
+      confirmSelected: "",
     };
   },
   methods: {
@@ -41,7 +42,7 @@ export default {
       axios
         .post("/api/gestationalLimits", { state: event.abbr })
         .then((response) => {
-          this.gestational_limit = response.data[event.name];
+          this.gestationalLimit = response.data[event.name];
           this.confirmSelected = this.selected.name;
           this.isLoading = false;
         });

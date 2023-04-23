@@ -1,44 +1,38 @@
 <template>
   <div class="display-gestational-limits">
     <div v-if="isLoading" class="loading-screen" />
-    <label v-if="formatLMP()" class="info-label"
+    <label v-if="formatLMP" class="info-label"
       >general abortion status for {{ selectedState }}:</label
     >
-    <p v-if="formatLMP()"><span>&#8226;</span> {{ formatLMP() }}</p>
+    <p v-if="formatLMP"><span>&#8226;</span> {{ formatLMP }}</p>
     <label
-      v-if="
-        formatException() || formatHealth() || formatFetus() || formatRape()
-      "
+      v-if="formatException || formatHealth || formatFetus || formatRape"
       class="info-label"
       >possible exceptions for {{ selectedState }}:</label
     >
-    <p v-if="formatException()"><span>&#8226;</span> {{ formatException() }}</p>
-    <p v-if="formatHealth()"><span>&#8226;</span> {{ formatHealth() }}</p>
-    <p v-if="formatFetus()"><span>&#8226;</span> {{ formatFetus() }}</p>
-    <p v-if="formatRape()"><span>&#8226;</span> {{ formatRape() }}</p>
-    <p
-      v-if="
-        selectedState &&
-        !formatLMP() &&
-        !formatException() &&
-        !formatHealth() &&
-        !formatFetus() &&
-        !formatRape()
-      "
-    >
-      sorry - there is no data being returned from the
-      <a target="_blank" href="http://www.abortionpolicyapi.com"
-        >Abortion Policy API</a
-      >
-      for this state at this time, but please check back later!
-    </p>
+    <p v-if="formatException">&#8226; {{ formatException }}</p>
+    <p v-if="formatHealth">&#8226; {{ formatHealth }}</p>
+    <p v-if="formatFetus">&#8226; {{ formatFetus }}</p>
+    <p v-if="formatRape">&#8226; {{ formatRape }}</p>
+    <span v-if="selectedState && noInfo">
+      <label class="info-label">
+        general abortion status for {{ selectedState }}:
+      </label>
+      <p>
+        sorry - there is no data being returned from the
+        <a target="_blank" href="http://www.abortionpolicyapi.com"
+          >Abortion Policy API</a
+        >
+        for this state at this time, but please check back later!
+      </p>
+    </span>
   </div>
 </template>
 
 <script>
 export default {
   props: ["data", "selectedState", "isLoading"],
-  methods: {
+  computed: {
     formatLMP() {
       switch (this.data?.banned_after_weeks_since_LMP) {
         case 99:
@@ -53,7 +47,7 @@ export default {
           return "this state bans abortion after 0 weeks - it is effectively banned, save for some possible exceptions";
         default:
           if (this.data?.banned_after_weeks_since_LMP) {
-            return `abortion is available until ${this.data.banned_after_weeks_since_LMP} weeks since the last menstrual period`;
+            return `abortion is available until ${this.data?.banned_after_weeks_since_LMP} weeks since the last menstrual period`;
           } else {
             return false;
           }
@@ -99,6 +93,15 @@ export default {
           return false;
       }
     },
+    noInfo() {
+      return (
+        !this.formatLMP &&
+        !this.formatException &&
+        !this.formatHealth &&
+        !this.formatFetus &&
+        !this.formatRape
+      );
+    },
   },
 };
 </script>
@@ -112,7 +115,7 @@ export default {
     color: white;
     display: block;
     padding: 0 0 5px 10px;
-    margin: 30px 0 10px;
+    margin: 50px 0 -10px;
     font-weight: 400;
   }
   p {
@@ -129,11 +132,6 @@ export default {
     object-fit: cover;
     background: url(../assets/uterlight-green.png) center center no-repeat;
     opacity: 0.5;
-  }
-  @media only screen and (max-width: 730px) {
-    .display-gestational-limits {
-      height: 600px;
-    }
   }
 }
 </style>

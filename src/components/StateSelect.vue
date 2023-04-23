@@ -1,11 +1,11 @@
 <template>
   <div class="state-select">
     <div>
-      <label id="select-state">search by state</label>
+      <label id="search-states">search by state</label>
       <select
         v-model="selected"
         name="states"
-        id="select-state"
+        id="search-states"
         @change="$emit('selectState', selected)"
       >
         <option disabled value="">select your state</option>
@@ -25,9 +25,6 @@ export default {
     return {
       selected: {},
       states: [],
-      gestational_limit: {},
-      confirmSelected: "",
-      isLoading: false,
     };
   },
   mounted() {
@@ -43,4 +40,15 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style lang="scss" scoped>
+.state-select {
+  margin-bottom: -30px;
+  #search-states {
+    font-size: 14pt;
+    font-weight: 300;
+    margin: 0 5px 20px 0;
+    line-height: 25px;
+    max-width: 400px;
+  }
+}
+</style>
