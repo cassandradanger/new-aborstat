@@ -1,78 +1,47 @@
 <template>
-  <div class="container">
+  <div class="app">
     <div>
-      <img class="logo" src="./assets/uterlight-purple.png" />
-      <h1 class="title">aborstat</h1>
-      <p class="welcome">
-        abortion laws and policies can change quickly. find reliable and
-        up-to-date information by state.
-      </p>
-      <label id="select-state">search by state</label>
-      <select
-        v-model="selected"
-        name="states"
-        id="select-state"
-        @change="handleSubmit"
-      >
-        <option disabled value="">select your state</option>
-        <option v-for="state in states" :value="state" v-bind:key="state.abbr">
-          {{ state.name }}
-        </option>
-      </select>
+      <AborstatHeader />
+      <StateSelect @select-state="handleSubmit" />
       <DisplayGestationalLimits
         :is-loading="isLoading"
         :data="gestational_limit"
         :selected-state="confirmSelected"
       />
-      <span class="data-attr-wrapper">
-        <h6>
-          abortion status - data provided by
-          <a target="_blank" href="http://www.abortionpolicyapi.com"
-            >Abortion Policy API</a
-          >, which should be consistent with the data from the
-          <a href=" https://www.guttmacher.org/state-policy/laws-policies"
-            >Guttmacher Institute</a
-          >
-        </h6>
-        <h6>
-          logo provided by
-          <a target="_blank" href="https://www.hajny.com">Chris Hajny</a>
-        </h6>
-      </span>
+      <AborstatFooter />
     </div>
   </div>
 </template>
 
 <script>
+import AborstatHeader from "./components/AborstatHeader";
+import StateSelect from "./components/StateSelect";
 import DisplayGestationalLimits from "./components/DisplayGestationalLimits";
+import AborstatFooter from "./components/AborstatFooter";
 import axios from "axios";
 
 export default {
-  components: { DisplayGestationalLimits },
+  components: {
+    AborstatHeader,
+    StateSelect,
+    DisplayGestationalLimits,
+    AborstatFooter,
+  },
   data() {
     return {
       selected: {},
-      states: [],
       gestational_limit: {},
-      confirmSelected: "",
       isLoading: false,
     };
   },
-  mounted() {
-    this.getStates();
-  },
   methods: {
-    getStates() {
-      axios.get("api/states").then((response) => {
-        this.states = response.data;
-      });
-    },
-    handleSubmit() {
+    handleSubmit(event) {
       this.isLoading = true;
+      this.selected = event;
       axios
-        .post("/api/gestationalLimits", { state: this.selected.abbr })
+        .post("/api/gestationalLimits", { state: event.abbr })
         .then((response) => {
-          this.gestational_limit = response.data[this.selected.name];
+          this.gestational_limit = response.data[event.name];
           this.confirmSelected = this.selected.name;
           this.isLoading = false;
         });
@@ -81,35 +50,14 @@ export default {
 };
 </script>
 
-<style scoped>
-.container {
+<style>
+.app {
   margin: 40px auto;
-  min-height: 100vh;
   display: flex;
   justify-content: center;
   text-align: center;
   font-family: "Quicksand", "Source Sans Pro", -apple-system, BlinkMacSystemFont,
     "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-}
-.logo {
-  height: 130px;
-}
-.title {
-  display: block;
-  font-size: 50px;
-  font-weight: 500;
-  color: #35495e;
-  letter-spacing: 3px;
-  margin: 0 0 30px;
-}
-.welcome {
-  font-size: 12pt;
-  font-weight: 300;
-  margin: 0 auto 20px;
-  line-height: 20px;
-  max-width: 400px;
-}
-.data-attr-wrapper {
-  margin-bottom: 0;
+  min-height: 100vh;
 }
 </style>

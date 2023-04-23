@@ -1,5 +1,5 @@
 <template>
-  <div class="display-info-wrapper">
+  <div class="display-gestational-limits">
     <div v-if="isLoading" class="loading-screen" />
     <label v-if="formatLMP()" class="info-label"
       >general abortion status for {{ selectedState }}:</label
@@ -102,45 +102,38 @@ export default {
   },
 };
 </script>
-<style>
-.display-info-wrapper {
-  font-weight: 300;
-  font-size: 20px;
-  color: #526488;
-  padding-bottom: 15px;
+<style lang="scss">
+.display-gestational-limits {
   text-align: left;
-  margin-top: 20px;
-  height: 300px;
-  max-width: 800px;
-}
-p {
-  margin: 5px 20px 10px;
-  font-weight: 500;
-  letter-spacing: 1px;
-}
-.info-label {
   font-size: 22px;
-  background-color: #9c3a9d;
-  color: white;
-  display: block;
-  padding: 0 0 5px 10px;
-  margin: 30px 0 10px;
-  font-weight: 400;
-}
-.loading-screen {
-  position: fixed;
-  margin: 0 auto;
-  width: 100%;
-  height: 100%;
-  top: 5%;
-  left: 0;
-  object-fit: cover;
-  background: url(../assets/uterlight-green.png) center center no-repeat;
-  opacity: 0.5;
-}
-@media only screen and (max-width: 730px) {
-  .display-info-wrapper {
-    height: 600px;
+  max-width: 900px;
+  .info-label {
+    background-color: #9c3a9d;
+    color: white;
+    display: block;
+    padding: 0 0 5px 10px;
+    margin: 30px 0 10px;
+    font-weight: 400;
+  }
+  p {
+    font-weight: 500;
+    color: #35495e;
+  }
+  .loading-screen {
+    position: fixed;
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+    top: 5%;
+    left: 0;
+    object-fit: cover;
+    background: url(../assets/uterlight-green.png) center center no-repeat;
+    opacity: 0.5;
+  }
+  @media only screen and (max-width: 730px) {
+    .display-gestational-limits {
+      height: 600px;
+    }
   }
 }
 </style>

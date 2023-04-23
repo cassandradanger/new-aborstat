@@ -5,6 +5,7 @@ const axios = require("axios");
 
 router.post("/", (req, res) => {
   let stateAbbr = req.body.state;
+  console.log("test", stateAbbr);
   axios({
     url: `https://api.abortionpolicyapi.com/v1/gestational_limits/states/${stateAbbr}/`,
     method: "GET",
