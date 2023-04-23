@@ -16,6 +16,8 @@ future optimizations could include:
 
 
 ## Project setup
+you'll need to get an API key from [Abortion Policy API](https://www.abortionpolicyapi.com/), and save it to a `.env` file under the name `POLICY_API_KEY`
+
 ```
 yarn install
 ```
@@ -23,6 +25,11 @@ yarn install
 ### Compiles and hot-reloads for development
 ```
 yarn serve
+```
+
+### Spin up the server
+```
+yarn run server
 ```
 
 ### Compiles and minifies for production
