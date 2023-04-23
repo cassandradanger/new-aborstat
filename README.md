@@ -1,7 +1,9 @@
 # new-aborstat
 ## About
 
-abortion laws and policies can change quickly. i created this app to help people find reliable and up-to-date information by state. it utilizes an API provided by [Abortion Policy API](https://www.abortionpolicyapi.com/).
+abortion laws and policies can change quickly. i created this app to help people find reliable and up-to-date information by state. 
+
+this projects utilizes an API provided by [Abortion Policy API](https://www.abortionpolicyapi.com/), Vue.js on the front end and Node.js and Express on the back end.
 
 <img width="1073" alt="Screen Shot 2023-04-23 at 11 30 38 AM" src="https://user-images.githubusercontent.com/10237149/233852252-7421cd72-513a-4487-b943-d857a3745192.png">
 
