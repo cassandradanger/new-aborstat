@@ -1,19 +1,23 @@
 <template>
   <div class="display-gestational-limits">
-    <div v-if="isLoading" class="loading-screen" />
-    <label v-if="formatLMP" class="info-label"
-      >general abortion status for {{ selectedState }}:</label
-    >
-    <p v-if="formatLMP"><span>&#8226;</span> {{ formatLMP }}</p>
-    <label
-      v-if="formatException || formatHealth || formatFetus || formatRape"
-      class="info-label"
-      >possible exceptions for {{ selectedState }}:</label
-    >
-    <p v-if="formatException">&#8226; {{ formatException }}</p>
-    <p v-if="formatHealth">&#8226; {{ formatHealth }}</p>
-    <p v-if="formatFetus">&#8226; {{ formatFetus }}</p>
-    <p v-if="formatRape">&#8226; {{ formatRape }}</p>
+    <div v-if="isLoading">
+      <img src="../assets/uterlight-green.png" class="loading-screen" />
+    </div>
+    <span v-if="formatLMP">
+      <label class="info-label">
+        general abortion status for {{ selectedState }}:
+      </label>
+      <p><span>&#8226;</span> {{ formatLMP }}</p>
+    </span>
+    <span v-if="formatException || formatHealth || formatFetus || formatRape">
+      <label class="info-label">
+        possible exceptions for {{ selectedState }}:
+      </label>
+      <p v-if="formatException">&#8226; {{ formatException }}</p>
+      <p v-if="formatHealth">&#8226; {{ formatHealth }}</p>
+      <p v-if="formatFetus">&#8226; {{ formatFetus }}</p>
+      <p v-if="formatRape">&#8226; {{ formatRape }}</p>
+    </span>
     <span v-if="selectedState && noInfo">
       <label class="info-label">
         general abortion status for {{ selectedState }}:
@@ -110,6 +114,8 @@ export default {
   text-align: left;
   font-size: 22px;
   max-width: 900px;
+  height: 75%;
+  border: 1px solid red;
   .info-label {
     background-color: #9c3a9d;
     color: white;
@@ -120,18 +126,14 @@ export default {
   }
   p {
     font-weight: 500;
-    color: #35495e;
   }
   .loading-screen {
-    position: fixed;
-    margin: 0 auto;
-    width: 100%;
-    height: 100%;
-    top: 5%;
-    left: 0;
-    object-fit: cover;
-    background: url(../assets/uterlight-green.png) center center no-repeat;
+    margin: 35px auto;
+    width: 50%;
+    height: 50%;
+    object-fit: contain;
     opacity: 0.5;
+    display: block;
   }
 }
 </style>

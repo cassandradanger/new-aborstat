@@ -59,6 +59,6 @@ export default {
   text-align: center;
   font-family: "Quicksand", "Source Sans Pro", -apple-system, BlinkMacSystemFont,
     "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  min-height: 100vh;
+  color: #35495e;
 }
 </style>
