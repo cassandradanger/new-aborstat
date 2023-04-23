@@ -17,7 +17,6 @@
 </template>
 <style lang="scss" scoped>
 .aborstat-footer {
-  // margin: 0 auto;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -28,8 +27,9 @@
   align-items: center;
   padding: 10px 0;
   h6 {
-    width: 90%;
-    margin: 8px;
+    width: 85%;
+    margin: 5px;
+    text-align: left;
   }
 }
 </style>

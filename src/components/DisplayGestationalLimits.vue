@@ -1,7 +1,7 @@
 <template>
   <div class="display-gestational-limits">
-    <div v-if="isLoading">
-      <img src="../assets/uterlight-green.png" class="loading-screen" />
+    <div v-if="isLoading" class="loading-screen">
+      <img src="../assets/uterlight-green.png" class="loading-image" />
     </div>
     <span v-if="formatLMP">
       <label class="info-label">
@@ -113,9 +113,9 @@ export default {
 .display-gestational-limits {
   text-align: left;
   font-size: 22px;
+  width: 100vw;
   max-width: 900px;
   height: 75%;
-  border: 1px solid red;
   .info-label {
     background-color: #9c3a9d;
     color: white;
@@ -126,14 +126,20 @@ export default {
   }
   p {
     font-weight: 500;
+    padding: 0 10px;
   }
   .loading-screen {
-    margin: 35px auto;
-    width: 50%;
-    height: 50%;
-    object-fit: contain;
-    opacity: 0.5;
-    display: block;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    .loading-image {
+      margin: 15px auto;
+      width: 30%;
+      min-width: 200px;
+      object-fit: contain;
+      opacity: 0.5;
+      display: block;
+    }
   }
 }
 </style>
